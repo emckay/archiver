@@ -1,0 +1,15 @@
+{
+  "name": "archiver",
+  "version": "0.0.1",
+  "description": "archive website to s3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "eric",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "uuid": "^3.0.0",
+    "website-scraper": "git+https://github.com/emckay/node-website-scraper.git#s3"
+  }
+}
