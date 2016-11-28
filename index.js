@@ -1,12 +1,15 @@
-const credentials = require('./credentials')
+const secrets = require('./secrets')
 const scraper = require('website-scraper')
 const uuid = require('uuid')
 
-exports.handler = (event, context, callback) => {
-    const body = JSON.parse(event.body)
+const handler = (event, context, callback) => {
+    const body = event.queryStringParameters
 
     const options = {
-        s3Options: credentials.s3Options,
+        s3Options: {
+            bucket: secrets.s3Bucket,
+            credentialsPath: './s3Credentials.json',
+        }
     }
 
     options.urls = [body.url]
@@ -18,14 +21,16 @@ exports.handler = (event, context, callback) => {
         .then(() =>
             context.succeed({
                 statusCode: 200,
-                headers: { 'ContentFormat': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ success: 1 }),
             })
         ).catch((err) => {
             console.error('error saving', err)
-            context.error({
+            context.fail({
                 statusCode: 500,
                 body: JSON.stringify(err),
             })
         })
 };
+
+exports.handler = handler

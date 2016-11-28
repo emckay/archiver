@@ -1,2 +1,4 @@
 node_modules
-credentials.js
+s3Credentials.json
+secrets.js
+.vscode
